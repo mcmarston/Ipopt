@@ -162,6 +162,21 @@ public:
       Index  num_nonlin_vars,
       Index* pos_nonlin_vars
    );
+
+    /** Intermediate Callback method for the user.  Providing dummy
+           *  default implementation.  For details see IntermediateCallBack
+        *  in IpNLP.hpp. */
+   virtual bool intermediate_callback(AlgorithmMode mode,
+                                          Index iter, Number obj_value,
+                                          Number inf_pr, Number inf_du,
+                                          Number mu, Number d_norm,
+                                          Number regularization_size,
+                                          Number alpha_du, Number alpha_pr,
+                                          Index ls_trials,
+                                          const IpoptData* ip_data,
+                                          IpoptCalculatedQuantities* ip_cq
+    );
+
    //@}
 
 public:
@@ -725,6 +740,30 @@ bool Jipopt::get_list_of_nonlinear_variables(
 
    return true;
 }
+
+bool Jipopt::intermediate_callback(AlgorithmMode mode,
+                                   Index iter, Number obj_value,
+                                   Number inf_pr, Number inf_du,
+                                   Number mu, Number d_norm,
+                                   Number regularization_size,
+                                   Number alpha_du, Number alpha_pr,
+                                   Index ls_trials,
+                                   const IpoptData* ip_data,
+                                   IpoptCalculatedQuantities* ip_cq)
+    {
+      return env->CallBooleanMethod (solver,intermediate_callback_,
+				iter,
+				obj_value,
+				inf_pr,
+				inf_du,
+				mu,
+				d_norm,
+				regularization_size,
+				alpha_du,
+				alpha_pr,
+				ls_trials);
+    }
+
 
 extern "C"
 {

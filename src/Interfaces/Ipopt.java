@@ -678,4 +678,19 @@ public abstract class Ipopt
    {
       return false;
    }
+
+   protected boolean intermediateCallback (int iter,
+                                           double obj_value,
+                                           double inf_pr,
+                                           double inf_du,
+                                           double mu,
+                                           double d_norm,
+                                           double regularization_size,
+                                           double alpha_du,
+                                           double alpha_pr,
+                                           int ls_trials)
+   {
+      return true;
+   }
+
 }
