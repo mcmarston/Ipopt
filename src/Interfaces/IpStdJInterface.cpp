@@ -220,6 +220,7 @@ public:
    jmethodID get_scaling_parameters_;
    jmethodID get_number_of_nonlinear_variables_;
    jmethodID get_list_of_nonlinear_variables_;
+   jmethodID intermediate_callback_;
 
 private:
    Jipopt(const Jipopt&);
@@ -257,6 +258,8 @@ Jipopt::Jipopt(
    get_scaling_parameters_            = env->GetMethodID(solverCls, "get_scaling_parameters", "([DI[DI[D[Z)Z");
    get_number_of_nonlinear_variables_ = env->GetMethodID(solverCls, "get_number_of_nonlinear_variables", "()I");
    get_list_of_nonlinear_variables_   = env->GetMethodID(solverCls, "get_list_of_nonlinear_variables", "(I[I)Z");
+   intermediate_callback_=env->GetMethodID(solverCls,"intermediateCallback","(IDDDDDDDDI)Z");
+
 
    if( get_bounds_info_ == 0 || get_starting_point_ == 0 || eval_f_ == 0
        || eval_grad_f_ == 0 || eval_g_ == 0 || eval_jac_g_ == 0 || eval_h_ == 0
